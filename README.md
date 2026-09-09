@@ -2,7 +2,8 @@
 
 # SMC Contribution Graph
 
-[![GitHub issues](https://img.shields.io/github/issues/SiratimMChy/smc-contribution-graph?style=flat-square)](https://github.com/SiratimMChy/smc-contribution-graph/issues)
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-404D59?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
 [![GitHub stars](https://img.shields.io/github/stars/SiratimMChy/smc-contribution-graph?style=flat-square)](https://github.com/SiratimMChy/smc-contribution-graph/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
