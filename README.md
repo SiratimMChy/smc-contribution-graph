@@ -1,160 +1,129 @@
-# Contribution Graph
+<div align="center">
 
-A professional API service that visualizes your GitHub commit activity over the last 31 days. This tool generates a beautiful, responsive SVG chart with a modern glowing neon theme, perfect for your GitHub profile README.
+# SMC Contribution Graph
+
+[![GitHub issues](https://img.shields.io/github/issues/SiratimMChy/smc-contribution-graph?style=flat-square)](https://github.com/SiratimMChy/smc-contribution-graph/issues)
+[![GitHub stars](https://img.shields.io/github/stars/SiratimMChy/smc-contribution-graph?style=flat-square)](https://github.com/SiratimMChy/smc-contribution-graph/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
+An API service that generates an SVG chart of your GitHub commit activity over the last 31 days. You can use it to display a dynamic contribution graph on your GitHub profile README.
+
+</div>
+
+---
 
 ## Overview
 
-Contribution Graph analyzes your GitHub contribution data and creates a stunning line and area chart. With smooth Bezier curves, dynamic gradients, and animated data points, this visualization helps you showcase your recent coding activity in style.
+**SMC Contribution Graph** fetches your GitHub contribution data and generates a line and area chart. It provides a visual summary of your recent commit history, which you can easily embed anywhere that supports images.
 
 ## Features
 
-- **GitHub GraphQL Integration**: Fetches real contribution data directly from GitHub
-- **31-Day Activity Tracking**: Highlights your daily commit frequency over the past month
-- **Premium Visualization**: Generates a responsive SVG chart with glowing effects, gradient fills, and smooth curves
-- **Neon Theme**: Features a sleek dark background (`#0A0F1C` to `#12182B`) with vibrant neon green and blue accents
-- **Customizable**: Built to be easily embedded in Markdown files or websites
-- **Caching Support**: Implements HTTP caching for optimal performance
+- **GraphQL Integration**: Fetches contribution data using the GitHub GraphQL API.
+- **31-Day Activity**: Shows your daily commit count for the past month.
+- **SVG Generation**: Creates an SVG chart with smooth curves and a dark theme.
+- **Caching**: Uses HTTP caching to minimize API calls and improve loading times.
 
-## Prerequisites
+## Tech Stack
+
+- **[Express.js](https://expressjs.com/)**: Web server framework.
+- **[Axios](https://axios-http.com/)**: HTTP client.
+- **[GitHub GraphQL API](https://docs.github.com/en/graphql)**: Data source.
+
+## Getting Started
+
+### Prerequisites
 
 - Node.js (v14 or higher)
-- GitHub Personal Access Token with read access to contributions
-- npm or yarn package manager
+- GitHub Personal Access Token (requires `read:user` scope)
+- npm or yarn
 
-## Installation
+### Installation
 
 1. Clone the repository:
-```bash
-git clone <repository-url>
-cd smc-contribution-graph
-```
+   ```bash
+   git clone https://github.com/SiratimMChy/smc-contribution-graph.git
+   cd smc-contribution-graph
+   ```
 
 2. Install dependencies:
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-3. Create a `.env` file in the root directory with your GitHub credentials:
-```env
-GITHUB_TOKEN=your_github_personal_access_token
-USERNAME=your_github_username
-PORT=3000
-```
-
-## Configuration
-
-### Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `GITHUB_TOKEN` | GitHub Personal Access Token for API authentication | Yes |
-| `USERNAME` | Your GitHub username | Yes |
-| `PORT` | Server port (defaults to 3000) | No |
+3. Create a `.env` file in the root directory:
+   ```env
+   GITHUB_TOKEN=your_github_personal_access_token
+   USERNAME=your_github_username
+   PORT=3000
+   ```
 
 ### Obtaining a GitHub Token
-
-1. Go to [GitHub Settings → Developer settings → Personal access tokens](https://github.com/settings/tokens)
-2. Click "Generate new token"
-3. Select `read:user` scope for reading public contribution data
-4. Copy the token and add it to your `.env` file
+1. Go to [Personal access tokens](https://github.com/settings/tokens) in your GitHub Developer settings.
+2. Click **Generate new token**.
+3. Select the `read:user` scope.
+4. Add the generated token to your `.env` file.
 
 ## Usage
 
-### Starting the Server
+### Running Locally
 
+Start the server:
 ```bash
 node index.js
 ```
-
-The server will start on the configured PORT (default: 3000).
+The server runs on port `3000` by default.
 
 ### API Endpoints
 
-#### GET `/commits`
-Returns an SVG visualization of your 31-day commit activity.
+#### `GET /commits`
+Generates and returns the SVG chart of your 31-day commit activity.
 
-**Response:**
-- Content-Type: `image/svg+xml`
-- Cache-Control: `public, max-age=3600` (1 hour cache)
-
-**Example:**
+**Example Request:**
 ```bash
 curl http://localhost:3000/commits
 ```
 
-#### GET `/`
-Health check endpoint.
-
-**Response:**
-```
-Commit Graph API Running 🚀
+**Embedding in Markdown:**
+```markdown
+![My Contribution Graph](http://localhost:3000/commits)
 ```
 
-## How It Works
-
-### Data Collection
-1. Queries GitHub GraphQL API for your contribution calendar
-2. Retrieves daily contribution counts and extracts the last 31 days
-
-### Visualization
-- Generates an SVG card with a dynamic Bezier curve line chart
-- Features a translucent gradient area fill below the curve
-- Includes animated pop-in dots for each day's contribution count
-- Fully responsive design that scales perfectly across devices
-
-## Technical Stack
-
-- **Express.js**: Web server framework
-- **Axios**: HTTP client for API requests
-- **dotenv**: Environment variable management
-- **GitHub GraphQL API**: Data source for contribution metrics
-
-## Project Structure
-
-```text
-smc-contribution-graph/
-├── index.js              # Main application file
-├── package.json          # Project dependencies
-├── vercel.json           # Vercel deployment configuration
-├── .env                  # Environment configuration (not committed)
-├── .gitignore            # Git ignore rules
-└── README.md             # This file
-```
-
-## Performance Considerations
-
-- **Caching**: SVG responses are cached for 1 hour to reduce API calls
-- **GraphQL Efficiency**: Single GraphQL query fetches targeted contribution data
-
-## Troubleshooting
-
-### "Error: GraphQL Error" or "User not found"
-- Verify your GitHub token is valid and has not expired
-- Ensure the `USERNAME` environment variable matches your GitHub username exactly
-
-### "Error generating graph" (on Vercel)
-- Make sure you have added `GITHUB_TOKEN` and `USERNAME` to the Environment Variables in your Vercel Project Settings and re-deployed.
+#### `GET /`
+Basic health check endpoint.
 
 ## Deployment
 
-This application is configured for deployment on Vercel. 
+This project is set up to deploy on **Vercel**. 
 
-### Deploy to Vercel
-
-1. Install Vercel CLI: `npm i -g vercel`
-2. Run the deployment command:
-```bash
-vercel --prod
-```
-
-## License
-
-ISC
-
-## Author
-
-Created for personal GitHub analytics and beautiful profile readmes.
+1. Install the Vercel CLI: 
+   ```bash
+   npm i -g vercel
+   ```
+2. Deploy:
+   ```bash
+   vercel --prod
+   ```
+Make sure to add `GITHUB_TOKEN` and `USERNAME` to your environment variables in the Vercel dashboard.
 
 ---
 
-**Note**: This tool is designed for personal use. Ensure you comply with GitHub's Terms of Service when using their API.
+## License & Contributions
+
+This project is open-source. Anyone is free to view, explore, and contribute to this repository. 
+
+**Usage of Cards:** You are free to generate and use these contribution graph cards on your own profile, websites, or applications. However, **you must provide proper credit** to the original creator. Using the generated cards or this codebase without attribution is not allowed.
+
+Distributed under the **MIT License**. See the license details for more information.
+
+*Copyright © 2026 SMC Contribution Graph. All rights reserved.*
+
+<br/>
+
+<div align="center">
+
+**Made by Siratim Mustakim Chowdhury**
+
+[![GitHub](https://img.shields.io/badge/GitHub-SiratimMChy-181717?style=flat&logo=github)](https://github.com/SiratimMChy)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Siratim%20Mustakim-0077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/siratim-mustakim-chowdhury/)
+[![Email](https://img.shields.io/badge/Email-chowdhurysiratimmustakim@gmail.com-D14836?style=flat&logo=gmail&logoColor=white)](mailto:chowdhurysiratimmustakim@gmail.com)
+</div>
