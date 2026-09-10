@@ -223,7 +223,7 @@ app.get("/commits", async (req, res) => {
     `;
 
     res.setHeader("Content-Type", "image/svg+xml");
-    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.setHeader("Cache-Control", "no-cache, max-age=0, must-revalidate");
     res.send(svg);
 
   } catch (err) {
